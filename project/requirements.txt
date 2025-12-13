@@ -1,0 +1,28 @@
+# Project dependencies for Physical AI & Humanoid Robotics
+
+# ROS 2 dependencies are managed through colcon and ROS package system
+# These are Python packages that integrate with ROS 2
+
+# For simulation
+gymnasium==0.29.1
+pygame==2.5.2
+
+# For AI/ML
+numpy==1.24.3
+scipy==1.11.2
+torch==2.0.1
+openai==0.28.1
+transformers==4.33.3
+
+# For testing
+pytest==7.4.2
+pytest-cov==4.1.0
+
+# For API and web services (if needed)
+fastapi==0.103.1
+uvicorn==0.23.2
+requests==2.31.0
+
+# For utilities
+pydantic==2.3.0
+python-dotenv==1.0.0
