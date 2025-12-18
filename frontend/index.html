@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book AI Chatbot</title>
+    <link rel="stylesheet" href="src/components/Chatbot/Chatbot.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Book AI Assistant</h1>
+        <div id="chatbot" class="chatbot-container">
+            <div class="chatbot-header">
+                <span>AI Book Assistant</span>
+            </div>
+            <div class="chatbot-messages" id="chatMessages">
+                <div class="message message--bot">
+                    <div class="message-text">Hello! I'm your AI assistant for books. Ask me anything about the books in our collection.</div>
+                    <div class="message-timestamp"></div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <textarea id="userInput" placeholder="Ask a question about the books..." rows="1"></textarea>
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+    </div>
+    <script src="src/js/chatbot.js"></script>
+</body>
+</html>

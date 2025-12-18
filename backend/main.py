@@ -55,8 +55,8 @@ def main():
         cohere_client = CohereClient()
         qdrant_client = QdrantClientWrapper()
 
-        # Ensure the collection exists with the correct vector dimensions (768 for Cohere)
-        qdrant_client.ensure_collection_exists(args.collection, recreate_if_exists=True)
+        # Ensure the collection exists with the correct vector dimensions (4096 for Cohere multilingual model)
+        qdrant_client.ensure_collection_exists(args.collection, recreate_if_exists=False)
 
         # Run the RAG process
         start_time = time.time()
