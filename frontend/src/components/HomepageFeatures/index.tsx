@@ -21,6 +21,16 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
+    title: 'AI-Powered Assistance',
+    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    description: (
+      <>
+        Get instant answers to your questions with our RAG-powered AI assistant
+        trained on the entire textbook content.
+      </>
+    ),
+  },
+  {
     title: 'Practical Learning',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (

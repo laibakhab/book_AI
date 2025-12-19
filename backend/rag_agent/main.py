@@ -5,7 +5,11 @@ import os
 import time
 import logging
 
-# Import our modules
+# Load environment variables from .env file before importing modules that depend on them
+from dotenv import load_dotenv
+load_dotenv()
+
+# Import our modules (after environment variables have been loaded)
 from rag_agent.agents.rag_agent import RAGAgent
 from rag_agent.config.settings import settings
 
@@ -56,22 +60,22 @@ async def query_endpoint(request: QueryRequest):
     Submit a query to the RAG agent and receive a grounded response based on book content.
     """
     start_time = time.time()
-    
+
     try:
         # Validate query is not empty
         if not request.query.strip():
             raise HTTPException(status_code=400, detail="Query cannot be empty")
-        
+
         # Process query with RAG agent
         result = rag_agent.process_query(
             query=request.query,
             top_k=request.top_k,
             temperature=request.temperature
         )
-        
+
         # Calculate processing time
         processing_time = (time.time() - start_time) * 1000  # Convert to milliseconds
-        
+
         # Format response
         response = QueryResponse(
             query_id=result.get("query_id", ""),
@@ -83,10 +87,10 @@ async def query_endpoint(request: QueryRequest):
             processing_time_ms=processing_time,
             timestamp=time.time()
         )
-        
+
         logger.info(f"Processed query in {processing_time:.2f}ms")
         return response
-        
+
     except Exception as e:
         logger.error(f"Error processing query: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
@@ -103,9 +107,9 @@ async def health_check():
         "qdrant_db": "connected" if rag_agent.check_qdrant_connection() else "disconnected",
         "agent_service": "ready"
     }
-    
+
     overall_status = "healthy" if all(status == "connected" for status in dependencies_status.values()) else "unhealthy"
-    
+
     return {
         "status": overall_status,
         "timestamp": time.time(),

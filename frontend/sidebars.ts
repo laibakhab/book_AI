@@ -16,6 +16,7 @@ const sidebars: SidebarsConfig = {
   // Manual sidebar for the textbook
   textbookSidebar: [
     'intro',
+    'interactive-assistant',
     {
       type: 'category',
       label: 'Chapter 1: Physical AI',

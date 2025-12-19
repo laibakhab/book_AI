@@ -68,6 +68,30 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    // Plugin to inject environment variables into the client bundle
+    () => ({
+      name: 'env-plugin',
+      configureWebpack: (config, isServer, { webpack }) => {
+        // Import webpack here to ensure it's available
+        const webpackLib = require('webpack');
+        return {
+          resolve: {
+            fallback: {
+              process: require.resolve('process/browser'),
+            },
+          },
+          plugins: [
+            ...config.plugins,
+            new webpackLib.DefinePlugin({
+              'process.env.BACKEND_URL': JSON.stringify(process.env.BACKEND_URL || 'http://localhost:8000'),
+            }),
+          ],
+        };
+      },
+    }),
+  ],
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
@@ -87,6 +111,7 @@ const config: Config = {
           position: 'left',
           label: 'Textbook',
         },
+        {to: '/chatbot-demo', label: 'AI Assistant', position: 'left'},
         {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/facebook/docusaurus',

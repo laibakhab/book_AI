@@ -22,6 +22,14 @@ This textbook is organized into six comprehensive chapters:
 
 Each chapter contains theoretical foundations, practical examples, and hands-on exercises to reinforce your learning. Start with Chapter 1 and progress sequentially for the best learning experience.
 
+## Interactive AI Assistant
+
+Ask questions about the book content using our AI assistant:
+
+import RAGChatbot from '@site/src/components/RAGChatbot/RAGChatbot';
+
+<RAGChatbot />
+
 ## Learning Objectives
 
 By the end of this book, you will:
