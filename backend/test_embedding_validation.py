@@ -46,6 +46,8 @@ def test_semantic_similarity():
     # Initialize Cohere client
     cohere_client = CohereClient()
 
+    
+
     # Semantically similar queries
     queries = [
         "What are the key features of RAG systems?",

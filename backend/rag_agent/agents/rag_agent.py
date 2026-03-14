@@ -4,7 +4,7 @@ import logging
 import uuid
 from typing import Dict, List, Any, Optional
 
-import openai
+from openai import OpenAI
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from qdrant_client.http.models import Distance, VectorParams
@@ -25,22 +25,21 @@ class RAGAgent:
 
     def __init__(self):
         # Initialize OpenAI client
-        openai.api_key = os.getenv("OPENAI_API_KEY")
-        if not openai.api_key:
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
             raise ValueError("OPENAI_API_KEY environment variable is required")
+        self.openai_client = OpenAI(api_key=api_key)
 
         # Initialize Qdrant client
         qdrant_url = os.getenv("QDRANT_URL")
         qdrant_api_key = os.getenv("QDRANT_API_KEY")
         if not qdrant_url:
             raise ValueError("QDRANT_URL environment variable is required")
-        if not qdrant_api_key:
-            raise ValueError("QDRANT_API_KEY environment variable is required")
 
-        self.qdrant_client = QdrantClient(
-            url=qdrant_url,
-            api_key=qdrant_api_key
-        )
+        qdrant_kwargs = {"url": qdrant_url}
+        if qdrant_api_key:
+            qdrant_kwargs["api_key"] = qdrant_api_key
+        self.qdrant_client = QdrantClient(**qdrant_kwargs)
 
         # Initialize tools
         self.retrieval_tool = RetrievalTool(self.qdrant_client)
@@ -178,7 +177,7 @@ class RAGAgent:
             }
         ]
 
-        response = openai.ChatCompletion.create(
+        response = self.openai_client.chat.completions.create(
             model=settings.OPENAI_MODEL,
             messages=messages,
             temperature=temperature,
@@ -187,7 +186,7 @@ class RAGAgent:
             stop=None
         )
 
-        return response.choices[0].message['content'].strip()
+        return response.choices[0].message.content.strip()
 
     def _format_citations(self, retrieved_passages: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
@@ -246,7 +245,7 @@ class RAGAgent:
             True if connection is successful, False otherwise
         """
         try:
-            openai.Model.list()
+            self.openai_client.models.list()
             return True
         except Exception:
             return False

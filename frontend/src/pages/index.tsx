@@ -11,17 +11,22 @@ import styles from './index.module.css';
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
+    <header className={clsx('hero', styles.heroBanner)}>
       <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <div className={clsx('hero__title', styles.titleContainer)}>
+          <div className={styles.gradientText}>{siteConfig.title}</div>
+        </div>
+        <p className={clsx('hero__subtitle', styles.subtitle)}>{siteConfig.tagline}</p>
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
+            className="button button--primary button--lg futuristic-glow"
             to="/docs/intro">
-            Start Reading - 30 Chapters ⏱️
+            Start Reading
+          </Link>
+          <Link
+            className="button button--secondary button--outline button--lg"
+            to="/chatbot-demo">
+            AI Assistant Demo
           </Link>
         </div>
       </div>
@@ -33,7 +38,7 @@ export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Welcome to ${siteConfig.title}`}
+      title={`Physical AI & Humanoid Robotics`}
       description="A comprehensive textbook on Physical AI and Humanoid Robotics">
       <HomepageHeader />
       <main>

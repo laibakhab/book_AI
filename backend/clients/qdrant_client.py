@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class QdrantClientWrapper:
     """Wrapper for Qdrant client to perform vector searches."""
 
-    def __init__(self, url: str = None, api_key: str = None, vector_size: int = 4096):
+    def __init__(self, url: str = None, api_key: str = None, vector_size: int = 768):
         """
         Initialize the Qdrant client.
 
@@ -134,17 +134,17 @@ class QdrantClientWrapper:
             raise ValueError(f"Query vector dimension mismatch. Expected: {self.vector_size}, Got: {len(query_vector)}")
 
         try:
-            # Using query_points which is the current method in newer versions of Qdrant
-            search_results = self.client.query_points(
+            # Using query_points which replaces search in qdrant-client >= 1.12
+            search_response = self.client.query_points(
                 collection_name=collection_name,
                 query=query_vector,
                 limit=top_k,
-                with_payload=with_payload
+                with_payload=with_payload,
             )
 
             # Format results to a more accessible format
             formatted_results = []
-            for hit in search_results.points:  # Access the points attribute in newer versions
+            for hit in search_response.points:
                 formatted_results.append({
                     "id": hit.id,
                     "score": hit.score,

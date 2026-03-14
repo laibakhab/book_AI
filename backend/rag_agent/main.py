@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
 import os
@@ -23,6 +24,25 @@ app = FastAPI(
     title="RAG Agent API",
     description="API for the RAG (Retrieval-Augmented Generation) Agent that answers queries using book content",
     version="1.0.0"
+)
+
+# Add CORS middleware to allow requests from the frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",    # Docusaurus default dev server
+        "http://localhost:3001",    # Alternative Docusaurus port
+        "http://localhost:3002",    # Another common port
+        "http://localhost:8000",    # Local development
+        "http://localhost:8001",    # Our backend server (for same-origin requests if needed)
+        "http://127.0.0.1:3000",    # Alternative localhost format
+        "http://127.0.0.1:3001",    # Alternative localhost format
+        "http://127.0.0.1:3002",    # Alternative localhost format
+        "https://physical-ai-hackathon-red.vercel.app",  # Production deployment
+    ],
+    allow_credentials=False,
+    allow_methods=["*"],  # Allow all methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Allow all headers
 )
 
 # Initialize the RAG agent

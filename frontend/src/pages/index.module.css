@@ -4,20 +4,108 @@
  */
 
 .heroBanner {
-  padding: 4rem 0;
+  padding: 6rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(135deg, #0B0F14 0%, #111827 100%);
+  border-bottom: 1px solid rgba(0, 229, 255, 0.1);
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #00E5FF, #3B82F6, #00E5FF, transparent);
+  animation: gradient-border 3s linear infinite;
+  z-index: 1;
+}
+
+@keyframes gradient-border {
+  0% {
+    background-position: -200% 0;
   }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.titleContainer {
+  margin-bottom: 1.5rem;
+}
+
+.gradientText {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00E5FF, #3B82F6, #00E5FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 8s linear infinite;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: #E5E7EB;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
 }
 
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.buttons a {
+  margin: 0 0.5rem;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 4rem 1.5rem;
+  }
+
+  .gradientText {
+    font-size: 2.2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .buttons a {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .heroBanner {
+    padding: 3rem 1rem;
+  }
+
+  .gradientText {
+    font-size: 1.8rem;
+  }
 }

@@ -15,7 +15,10 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  // url: 'https://physical-ai-humanoid-book-murex.vercel.app/s',
+
+
+  url: 'https://physical-ai-hackathon-red.vercel.app/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -84,7 +87,8 @@ const config: Config = {
           plugins: [
             ...config.plugins,
             new webpackLib.DefinePlugin({
-              'process.env.BACKEND_URL': JSON.stringify(process.env.BACKEND_URL || 'http://localhost:8000'),
+              'process.env.BACKEND_URL': JSON.stringify(process.env.BACKEND_URL || 'http://localhost:8001'),
+              'process.env.REACT_APP_BACKEND_URL': JSON.stringify(process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'),
             }),
           ],
         };
@@ -96,12 +100,14 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     colorMode: {
-      respectPrefersColorScheme: true,
+      defaultMode: 'dark',
+      disableSwitch: false,
+      respectPrefersColorScheme: false, // Force dark mode as default
     },
     navbar: {
       title: 'Physical AI & Humanoid Robotics',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'Physical AI & Humanoid Robotics Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -119,6 +125,7 @@ const config: Config = {
           position: 'right',
         },
       ],
+      style: 'dark',
     },
     footer: {
       style: 'dark',
@@ -130,11 +137,40 @@ const config: Config = {
               label: 'Introduction',
               to: '/docs/intro',
             },
+            {
+              label: 'Physical AI',
+              to: '/docs/physical-ai/introduction',
+            },
+            {
+              label: 'Humanoid Robotics',
+              to: '/docs/humanoid-robotics/overview',
+            },
+          ],
+        },
+        {
+          title: 'Resources',
+          items: [
+            {
+              label: 'AI Assistant',
+              to: '/chatbot-demo',
+            },
+            {
+              label: 'ROS 2 Guide',
+              to: '/docs/ros-2/getting-started',
+            },
+            {
+              label: 'Simulation',
+              to: '/docs/simulation/gazebo-simulation',
+            },
           ],
         },
         {
           title: 'Community',
           items: [
+            {
+              label: 'GitHub',
+              href: 'https://github.com/facebook/docusaurus',
+            },
             {
               label: 'Stack Overflow',
               href: 'https://stackoverflow.com/questions/tagged/docusaurus',
@@ -143,31 +179,42 @@ const config: Config = {
               label: 'Discord',
               href: 'https://discordapp.com/invite/docusaurus',
             },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
-            },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `<div class="footer__copyright">Copyright © ${new Date().getFullYear()} Physical AI & Humanoid Robotics Textbook. Built with Docusaurus.</div>`,
     },
     prism: {
       theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      darkTheme: prismThemes.vsDark,
+      additionalLanguages: ['python', 'bash', 'json', 'yaml', 'docker'],
+    },
+    algolia: {
+      // The application ID provided by Algolia
+      appId: 'YOUR_APP_ID',
+
+      // Public API key: it is safe to commit it
+      apiKey: 'YOUR_SEARCH_API_KEY',
+
+      indexName: 'physical-ai-humanoid-robotics',
+
+      // Optional: see doc section below
+      contextualSearch: true,
+
+      // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+      externalUrlRegex: 'external\\.com|domain\\.com',
+
+      // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
+      replaceSearchResultPathname: {
+        from: '/docs/', // or as RegExp: /\/docs\//
+        to: '/',
+      },
+
+      // Optional: Algolia search parameters
+      searchParameters: {},
+
+      // Optional: path for search page that enabled by default (`false` to disable it)
+      searchPagePath: 'search',
     },
   } satisfies Preset.ThemeConfig,
 };

@@ -4,8 +4,8 @@
 // Use window object to store the backend URL
 const BACKEND_URL =
   typeof window !== 'undefined'
-    ? (window as any).__BACKEND_URL__ || 'http://localhost:8000'
-    : 'http://localhost:8000';
+    ? (window as any).__BACKEND_URL__ || process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'
+    : process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
 interface QueryRequest {
   query: string;
@@ -34,6 +34,7 @@ interface SourceCitation {
 
 class DocusaurusChatService {
   async query(request: QueryRequest): Promise<QueryResponse> {
+    console.log(`[ChatService] Sending query to ${BACKEND_URL}/query`, request);
     const response = await fetch(`${BACKEND_URL}/query`, {
       method: 'POST',
       headers: {
@@ -41,8 +42,6 @@ class DocusaurusChatService {
         'Accept': 'application/json'
       },
       body: JSON.stringify(request),
-      // Add credentials include to handle cookies if needed
-      credentials: 'include'
     });
 
     if (!response.ok) {
@@ -69,7 +68,6 @@ class DocusaurusChatService {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      credentials: 'include'
     });
 
     if (!response.ok) {
